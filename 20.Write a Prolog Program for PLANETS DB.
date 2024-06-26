@@ -1,0 +1,46 @@
+% Facts
+
+% planet(Name, DistanceFromSun, Diameter, Mass).
+planet('Mercury', 57.9, 4879, 0.33).
+planet('Venus', 108.2, 12104, 4.87).
+planet('Earth', 149.6, 12742, 5.97).
+planet('Mars', 227.9, 6779, 0.642).
+planet('Jupiter', 778.3, 139820, 1898).
+planet('Saturn', 1427, 116460, 568).
+planet('Uranus', 2871, 50724, 86.8).
+planet('Neptune', 4495, 49244, 102).
+planet('Pluto', 5906, 2370, 0.0146).
+
+% Rules
+
+% Find the distance of a planet from the sun
+distance_from_sun(Planet, Distance) :-
+    planet(Planet, Distance, _, _).
+
+% Find the diameter of a planet
+diameter_of_planet(Planet, Diameter) :-
+    planet(Planet, _, Diameter, _).
+
+% Find the mass of a planet
+mass_of_planet(Planet, Mass) :-
+    planet(Planet, _, _, Mass).
+
+% Find the planet with the largest diameter
+largest_diameter(Planet) :-
+    planet(Planet, _, Diameter, _),
+    \+ (planet(_, _, OtherDiameter, _), OtherDiameter > Diameter).
+
+% Find the planet with the largest mass
+largest_mass(Planet) :-
+    planet(Planet, _, _, Mass),
+    \+ (planet(_, _, _, OtherMass), OtherMass > Mass).
+
+% Find the planet with the smallest distance from the sun
+closest_to_sun(Planet) :-
+    planet(Planet, Distance, _, _),
+    \+ (planet(_, OtherDistance, _, _), OtherDistance < Distance).
+
+% Find the planet with the smallest distance from the sun
+farthest_from_sun(Planet) :-
+    planet(Planet, Distance, _, _),
+    \+ (planet(_, OtherDistance, _, _), OtherDistance > Distance).
