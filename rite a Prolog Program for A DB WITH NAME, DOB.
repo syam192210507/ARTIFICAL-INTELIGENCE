@@ -1,0 +1,27 @@
+% Facts
+person('John Doe', date(1980, 5, 23)).
+person('Jane Smith', date(1990, 11, 12)).
+person('Alice Jones', date(1975, 7, 30)).
+person('Bob Brown', date(2000, 1, 1)).
+
+% Rules
+
+% Retrieve a person's date of birth
+dob(Name, DOB) :-
+    person(Name, DOB).
+
+% Retrieve all persons born in a specific year
+born_in_year(Year, Name) :-
+    person(Name, date(Year, _, _)).
+
+% Retrieve all persons born in a specific month
+born_in_month(Month, Name) :-
+    person(Name, date(_, Month, _)).
+
+% Retrieve all persons born on a specific day
+born_on_day(Day, Name) :-
+    person(Name, date(_, _, Day)).
+
+% Retrieve all persons born in a specific year and month
+born_in_year_month(Year, Month, Name) :-
+    person(Name, date(Year, Month, _)).
