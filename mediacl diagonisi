@@ -1,0 +1,24 @@
+% Define possible diagnoses
+diagnosis(flu) :- symptom(fever), symptom(cough), symptom(sore_throat), symptom(runny_nose).
+diagnosis(common_cold) :- symptom(cough), symptom(sore_throat), symptom(runny_nose), \+ symptom(fever).
+diagnosis(strep_throat) :- symptom(sore_throat), symptom(fever), \+ symptom(cough), \+ symptom(runny_nose).
+diagnosis(allergies) :- symptom(runny_nose), symptom(itchy_eyes), \+ symptom(fever), \+ symptom(sore_throat).
+
+% Define symptoms
+ask_symptom(Symptom) :- write('Do you have '), write(Symptom), write('? (yes/no) '), read(Response), Response = 'yes'.
+
+% Main predicate to start the diagnosis
+start_diagnosis :-
+    write('Medical Diagnosis System'), nl,
+    write('Please answer the following questions with yes or no.'), nl,
+    (   ask_symptom(fever) -> assert(symptom(fever)) ; true),
+    (   ask_symptom(cough) -> assert(symptom(cough)) ; true),
+    (   ask_symptom(sore_throat) -> assert(symptom(sore_throat)) ; true),
+    (   ask_symptom(runny_nose) -> assert(symptom(runny_nose)) ; true),
+    (   ask_symptom(itchy_eyes) -> assert(symptom(itchy_eyes)) ; true),
+    (   diagnosis(D) -> write('You may have '), write(D), write('.') ; write('Sorry, I could not diagnose your condition.')),
+    nl, clear_symptoms.
+
+% Clear symptoms from the knowledge base
+clear_symptoms :-
+    retractall(symptom(_)).
